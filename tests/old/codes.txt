@@ -1,0 +1,11 @@
+ temp <- list(cgf.view = cgf.view, Rg = Rg, i0.sun = i0.sun, Q = Q, wC = wC)
+  BRF <- pmap_dbl( .l = temp, # This return a vector
+       .f = function(cgf.view, Rg, i0.sun, Q, wC) (cgf.view * Rg * (1 - i0.sun)) + (Q * i0.sun * wC) )
+
+paras.BRF.res <- gaps %>% dplyr::select(cgf.view, cgf.sun, DIFN, LAItrue,                             # Line 1:3 needs to keep only columns which are arguments to functions 
+                       prop_pine, prop_spruce, prop_birch,
+                       Site_type_lab) %>% 
+                 plyr::mdply(paras_BRF, wL.S2 = wL.3Species.S2.ls, Rg.S2 = Rg.3Class.S2.ls) %>%  # Apply paras_BRF function to each row
+                 dplyr::select(LAItrue, b2:b12) %>% left_join(gaps) %>%        # Select only the BRF result columns, and join table with gaps table, LAItrue as key  
+                 dplyr::select(ID:LAIeff, LAItrue, DIFN:dominant_species, b2:b12) # Re-arrange the columns so BRFs are last
+

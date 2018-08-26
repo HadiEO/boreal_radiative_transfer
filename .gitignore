@@ -1,0 +1,17 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+cache/
+data/
+diagnostics/
+doc/
+graphs/
+logs/
+profiling/
+publication/
+reports/
+results/
+src/
+www/
+app_data.rds
